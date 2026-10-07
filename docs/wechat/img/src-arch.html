@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1240px;background:#fbf8f1;font-family:"Microsoft YaHei","PingFang SC",sans-serif;padding:52px 56px 56px}
+.hd{display:flex;align-items:baseline;gap:16px;border-bottom:3px solid #2f3542;padding-bottom:18px}
+.h1{font-size:44px;font-weight:700;color:#1e2430;letter-spacing:-1px}
+.sub{font-size:19px;color:#6b7280}
+.badge{margin-left:auto;background:#2f3542;color:#fbf8f1;font-size:15px;padding:6px 16px;border-radius:4px;font-weight:600}
+.stack{margin-top:34px}
+.lay{display:flex;align-items:center;gap:20px;margin-bottom:14px;background:#fff;border:1.5px solid #ddd;border-radius:10px;padding:18px 22px}
+.tag{flex:0 0 82px;text-align:center;font-size:20px;font-weight:700;color:#fff;border-radius:6px;padding:9px 0}
+.l1 .tag{background:#378add}.l2 .tag{background:#7f77dd}.l3 .tag{background:#e24b4a}
+.l4 .tag{background:#1d9e75}.l5 .tag{background:#888780}
+.body{flex:1}
+.t1{font-size:22px;font-weight:700;color:#1e2430;margin-bottom:5px}
+.t2{font-size:16px;color:#666e7a;line-height:1.5}
+.chip{flex:0 0 108px;text-align:center;font-size:14px;font-weight:600;border-radius:5px;padding:7px 0}
+.l1 .chip{background:#e6f1fb;color:#185fa5}
+.l2 .chip{background:#eeedfe;color:#534ab7}
+.l3 .chip{background:#fcebeb;color:#a32d2d}
+.l4 .chip{background:#e1f5ee;color:#0f6e56}
+.l5 .chip{background:#f1efe8;color:#5f5e5a}
+.arrow{text-align:center;font-size:20px;color:#9aa1ac;line-height:1;margin:2px 0 4px}
+.note{margin-top:30px;background:#fff;border:1.5px dashed #9aa1ac;border-radius:10px;padding:20px 24px}
+.note h3{font-size:19px;color:#1e2430;margin-bottom:12px}
+.note li{font-size:16px;color:#4b5563;line-height:1.85;margin-left:22px}
+.hl{background:linear-gradient(transparent 55%,#ffe98a 55%);padding:0 3px}
+.ft{margin-top:24px;font-size:14px;color:#8b919b;text-align:right}
+</style></head><body>
+<div class="hd"><div class="h1">仪器升级五层结构</div><div class="sub">只有中间两层是新增的</div><div class="badge">通用架构</div></div>
+<div class="stack">
+  <div class="lay l1"><div class="tag">L1</div><div class="body"><div class="t1">表现层　GUI · 面板 · 波形显示 · 原有交互</div><div class="t2">原样保留，只增加一个对话框和一块结果面板</div></div><div class="chip">存量资产</div></div>
+  <div class="arrow">▼</div>
+  <div class="lay l2"><div class="tag">L2</div><div class="body"><div class="t1">编排层　Agent Sidecar　意图解析 · 工具调用 · 知识检索</div><div class="t2">把「人话」翻译成结构化调用，<span class="hl">不碰硬件</span></div></div><div class="chip">核心新增</div></div>
+  <div class="arrow">▼</div>
+  <div class="lay l3"><div class="tag">L3</div><div class="body"><div class="t1">契约层　DeviceConfig Schema　量程 · 枚举 · 继承 · 校验</div><div class="t2">系统唯一真相源，<span class="hl">越界值在此被拦下</span></div></div><div class="chip">安全闸门</div></div>
+  <div class="arrow">▼</div>
+  <div class="lay l4"><div class="tag">L4</div><div class="body"><div class="t1">抽象层　IDriver　state · apply · acquire · capabilities</div><div class="t2">换仪器只换实现，<span class="hl">上层代码零改动</span></div></div><div class="chip">改造重点</div></div>
+  <div class="arrow">▼</div>
+  <div class="lay l5"><div class="tag">L5</div><div class="body"><div class="t1">设备层　SCPI · VISA · Modbus · 私有协议 · 仿真器</div><div class="t2">存量硬件不动，先用虚拟驱动跑通全链路</div></div><div class="chip">存量硬件</div></div>
+</div>
+<div class="note"><h3>读图要点</h3><ul>
+<li>L1 表现层 + L5 设备层基本不动，<span class="hl">存量资产被完整保住</span></li>
+<li>真正的工作量集中在 L2 编排层与 L3 契约层的<b>新增</b></li>
+<li>即使 AI 部分全部推倒重来，你依然拥有一台能正常工作的传统仪器</li>
+</ul></div>
+<div class="ft">ScopeAgent 实践提炼 · 传统智能仪器升级方法论</div>
+</body></html>

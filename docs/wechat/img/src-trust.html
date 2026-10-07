@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1240px;height:872px;background:#fbf8f1;font-family:"Microsoft YaHei","PingFang SC",sans-serif;padding:52px 56px 40px;overflow:hidden}
+.hd{display:flex;align-items:baseline;gap:16px;border-bottom:3px solid #2f3542;padding-bottom:18px}
+.h1{font-size:44px;font-weight:700;color:#1e2430;letter-spacing:-1px}
+.sub{font-size:19px;color:#6b7280}
+.badge{margin-left:auto;background:#a32d2d;color:#fff;font-size:15px;padding:6px 16px;border-radius:4px;font-weight:600}
+.flow{margin-top:30px;display:flex;align-items:stretch;gap:0}
+.step{flex:1;background:#fff;border:1.5px solid #ddd;border-radius:10px;padding:18px 16px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+.arw{flex:0 0 34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#9aa1ac}
+.s1{border-color:#b5d4f4}.s2{border-color:#fac775}.s3{border-color:#f09595;border-width:2.5px}
+.s4{border-color:#f09595;border-width:2.5px}.s5{border-color:#9fe1cb;border-width:2.5px}
+.t{font-size:19px;font-weight:700;color:#1e2430;margin-bottom:7px}
+.d{font-size:14px;color:#6b7280;line-height:1.55}
+.s1 .t{color:#185fa5}.s2 .t{color:#854f0b}.s3 .t{color:#a32d2d}.s4 .t{color:#a32d2d}.s5 .t{color:#0f6e56}
+.gate{font-size:12px;font-weight:700;color:#fff;background:#e24b4a;border-radius:4px;padding:3px 0;margin-bottom:9px}
+.warn{margin-top:6px;font-size:13px;color:#a32d2d;background:#fcebeb;border-radius:4px;padding:5px 8px;display:inline-block}
+.flow2{margin-top:34px;background:#fff;border:1.5px solid #ddd;border-radius:10px;padding:24px 26px}
+.flow2 h3{font-size:20px;color:#1e2430;margin-bottom:16px}
+.row{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.k{flex:0 0 168px;font-size:16px;font-weight:700;color:#185fa5}
+.v{font-size:15.5px;color:#4b5563;line-height:1.6}
+.hl{background:linear-gradient(transparent 55%,#ffe98a 55%);padding:0 3px}
+.two{display:flex;gap:18px;margin-top:22px}
+.box{flex:1;background:#fff;border:1.5px solid #ddd;border-radius:10px;padding:20px 22px}
+.box h4{font-size:17px;color:#1e2430;margin-bottom:11px}
+.box li{font-size:14.5px;color:#4b5563;line-height:1.8;margin-left:19px}
+.ft{margin-top:22px;font-size:14px;color:#8b919b;text-align:right}
+</style></head><body>
+<div class="hd"><div class="h1">LLM 输出永不可信</div><div class="sub">两道闸门后才准碰硬件</div><div class="badge">信任模型</div></div>
+<div class="flow">
+  <div class="step s1"><div class="t">用户意图</div><div class="d">「时基调到<br>200µs」</div></div>
+  <div class="arw">▶</div>
+  <div class="step s2"><div class="t">大模型建议</div><div class="d">可能幻觉<br>可能越界</div></div>
+  <div class="arw">▶</div>
+  <div class="step s3"><div class="gate">闸门一</div><div class="t">Schema 校验钳制</div><div class="d">range clamp<br>enum 白名单</div><div class="warn">越界→ 就地钳制<br>+产出告警</div></div>
+  <div class="arw">▶</div>
+  <div class="step s4"><div class="gate">闸门二</div><div class="t">宿主侧<br>clamped 兜底</div><div class="d">独立实现<br>不信任上游</div></div>
+  <div class="arw">▶</div>
+  <div class="step s5"><div class="t">IDriver 下发</div><div class="d">虚拟 / SCPI<br>同一条路径</div></div>
+</div>
+<div class="flow2"><h3>原则与推论</h3>
+  <div class="row"><div class="k">核心原则</div><div class="v">Agent <span class="hl">只建议</span>，宿主才是<span class="hl">唯一真相源</span>（single source of truth）</div></div>
+  <div class="row"><div class="k">推论一</div><div class="v">LLM 不进实时采集线程，只在配置路径与解释路径上活动</div></div>
+  <div class="row"><div class="k">推论二</div><div class="v">模型可换、协议可换，<span class="hl">契约不可随意变</span>——它是系统的地基</div></div>
+  <div class="row"><div class="k">推论三</div><div class="v">无 key / 断网时手动操作照常工作，这是<span class="hl">正常状态</span>而非错误</div></div>
+</div>
+<div class="two">
+  <div class="box"><h4>为什么是「双层」而不是一层</h4><ul>
+    <li>两套代码在不同语言、不同进程实现</li>
+    <li>任一层被绕过或自身有 bug，另一层仍能兜住</li>
+    <li>Agent 进程可独立升级、替换甚至多实例并存，宿主安全边界不变</li>
+  </ul></div>
+  <div class="box"><h4>钳制要「响」而不是静默</h4><ul>
+    <li>静默改成合法值 → 用户只会认为「仪器失灵了」</li>
+    <li>必须产出<b>用户可见的告警</b>并展示配置理由</li>
+    <li>让人复核的是<b>理由与告警</b>，而非逐个核对参数</li>
+  </ul></div>
+</div>
+<div class="ft">ScopeAgent 实践提炼 · 双层钳制信任模型</div>
+</body></html>

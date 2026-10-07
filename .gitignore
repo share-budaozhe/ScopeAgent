@@ -1,0 +1,35 @@
+# 构建产物
+build/
+build-*/
+dist/
+
+# Python
+__pycache__/
+*.pyc
+agent/build/
+agent/dist/
+*.spec
+
+# Qt
+*.user
+*.user.*
+Makefile
+Makefile.*
+.qmake.stash
+moc_*.cpp
+
+# 测试产物
+*.exe
+render_scope.png
+
+# 运行时数据（用户导入的知识库）
+agent/knowledge/
+
+# 本地嵌入模型（大文件，单独下载，缺失时回退 HashEmbedder）
+agent/models/
+
+# 运行时配置（可能含真实 API Key，绝不提交；模板见 config.example.json）
+agent/config.json
+
+# 本地工具/编辑器状态
+.workbuddy/

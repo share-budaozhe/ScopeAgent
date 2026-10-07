@@ -1,0 +1,7 @@
+# ScopeAgent sidecar — RAG 知识库依赖（第三方，仅知识库功能需要）
+# 用法：pip install -r agent/requirements.txt
+# 若不想引入这些依赖，知识库会自动降级为 HashEmbedder（词法检索），PDF 不可导入。
+pypdf>=4.0
+onnxruntime>=1.16
+numpy>=1.24
+tokenizers>=0.15
